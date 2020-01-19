@@ -44,6 +44,13 @@ private PlayerView playerView;
     @Override
     protected void onResume() {
         super.onResume();
+        playerView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        playerView.onPause();
     }
 
     private void enterPIPMode () {
