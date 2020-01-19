@@ -1,5 +1,6 @@
 package com.iamrajendra.pictureinpicture;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PictureInPictureParams;
@@ -7,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 private PlayerView playerView;
     private SimpleExoPlayer player;
     private long videoPosition;
+    private boolean isPIPModeeEnabled = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,11 @@ private PlayerView playerView;
                         .createMediaSource(Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"));
         player.prepare(videoSource);
         playerView.setPlayer(player);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void enterPIPMode () {
@@ -54,8 +62,16 @@ private PlayerView playerView;
                 this.enterPictureInPictureMode();
             }
 
-
         }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    checkPiPPermission();
+                }
+            }
+        },30);
     }
 
     @Override
@@ -71,4 +87,21 @@ private PlayerView playerView;
 
         }
     }
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        enterPIPMode();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private  void checkPiPPermission(){
+        isPIPModeeEnabled = isInPictureInPictureMode();
+
+        if(!isPIPModeeEnabled){
+            onBackPressed();
+        }
+    }
+
+
 }
