@@ -2,7 +2,7 @@ project.ext {
 
     compileSdkVersion =29
     buildToolsVersion ='29.0.2'
-    minSdkVersion =15
+    minSdkVersion =16
     targetSdkVersion =29
     versionCode =1
     versionName ="1.0"
@@ -12,4 +12,5 @@ project.ext {
     junit ='4.12'
     runner ='1.2.0'
     espresso ='3.2.0'
+    exoplayer ='2.11.1'
 }
