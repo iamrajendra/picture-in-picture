@@ -18,6 +18,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -27,4 +31,6 @@ dependencies {
     testImplementation 'junit:junit:'+junit
     androidTestImplementation 'androidx.test:runner:'+runner
     androidTestImplementation 'androidx.test.espresso:espresso-core:'+espresso
+    implementation 'com.google.android.exoplayer:exoplayer:'+exoplayer
+
 }
