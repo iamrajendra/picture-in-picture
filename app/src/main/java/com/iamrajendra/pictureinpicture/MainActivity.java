@@ -110,5 +110,10 @@ private PlayerView playerView;
         }
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        playerView.setPlayer( null);
+        player.release();
+    }
 }
